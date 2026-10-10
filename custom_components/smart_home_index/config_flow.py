@@ -4,35 +4,30 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.helpers import selector
 
-from .const import CONF_PANEL, CONF_REGION, CONF_TELEMETRY, DOMAIN, REGIONS
+from . import feed
+from .const import CONF_PANEL, DOMAIN, FEED_URL
+from .coordinator import make_fetch
 
 
 def _schema(d: dict) -> vol.Schema:
-    return vol.Schema({
-        vol.Required(CONF_REGION, default=d.get(CONF_REGION, "en")): selector.SelectSelector(
-            selector.SelectSelectorConfig(options=[selector.SelectOptionDict(value=k, label=v) for k, v in REGIONS.items()],
-                                          mode=selector.SelectSelectorMode.DROPDOWN)),
-        vol.Required(CONF_PANEL, default=d.get(CONF_PANEL, True)): bool,
-        vol.Required(CONF_TELEMETRY, default=d.get(CONF_TELEMETRY, False)): bool,
-    })
-
-
-def _catalog_size() -> int:
-    import json
-    from pathlib import Path
-    return len(json.loads((Path(__file__).parent / "data" / "catalog_snapshot.json").read_text())["devices"])
+    return vol.Schema({vol.Required(CONF_PANEL, default=d.get(CONF_PANEL, True)): bool})
 
 
 class ShiConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
     async def async_step_user(self, user_input=None):
+        errors = {}
         if user_input is not None:
-            return self.async_create_entry(title="Smart Home Index", data={}, options=user_input)
-        count = await self.hass.async_add_executor_job(_catalog_size)
-        return self.async_show_form(step_id="user", data_schema=_schema({}), description_placeholders={"count": str(count)})
+            # The first run needs the network: there is no catalog on disk yet.
+            try:
+                await feed.refresh(make_fetch(self.hass), FEED_URL, None, "")
+            except feed.FeedError:
+                errors["base"] = "cannot_connect"
+            else:
+                return self.async_create_entry(title="Smart Home Index", data={}, options=user_input)
+        return self.async_show_form(step_id="user", data_schema=_schema(user_input or {}), errors=errors)
 
     @staticmethod
     @callback

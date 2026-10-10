@@ -1,4 +1,4 @@
-// Smart Home Index preview panel. Plain web component, no build step.
+// Smart Home Index sidebar panel. Plain web component, no build step.
 const THUMB = (id) =>
   `https://smarthomeindex.com/api/fetchThumbnail?deviceId=${id}&w=96`;
 const esc = (s) =>
@@ -166,7 +166,7 @@ class ShiPanel extends HTMLElement {
           .meta { word-break:break-word; }
         }
       </style>
-      <div class="toolbar"><span id="menu"></span><span class="title">Smart Home Index</span><span class="src">Catalog of ${r.catalog_size} devices · preview</span></div>
+      <div class="toolbar"><span id="menu"></span><span class="title">Smart Home Index</span><span class="src">Catalog of ${r.catalog_size} devices${r.catalog.fetched_at ? ", updated " + esc(r.catalog.fetched_at.slice(0, 10)) : ""}</span></div>
       <div class="tabs">${["overview", "devices", "ideas", "unmatched"].map((t) => `<button data-tab="${t}" class="${t === tab ? "on" : ""}">${{ overview: "Overview", devices: "Your devices", ideas: "Ideas", unmatched: `Not in SHI yet (${r.unmatched.length})` }[t]}</button>`).join("")}</div>
       <main>${this[`_${tab}`](r, eolCount)}</main>
       ${this._pick ? this._picker() : ""}

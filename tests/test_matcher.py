@@ -110,3 +110,9 @@ def test_hash_uuid_matches_the_site(matcher):
 def test_alias_table_rules_point_at_shapes_the_matcher_can_read(aliases):
     for r in aliases["rules"]:
         assert {"manufacturer", "model_id", "shi_id"} <= r.keys()
+
+
+def test_end_of_life_groups_carry_a_short_name_for_the_repairs_title(matcher, catalog, aliases):
+    eol = report(matcher, catalog, aliases, [device("a", "s", "SONOFF", "x", "SNZB-02")])["end_of_life"][0]
+    assert eol["short_name"] == "SNZB-02"  # the model number, so the title reads "8 x SNZB-02 end of life"
+    assert eol["shi_name"].startswith("SONOFF Zigbee")  # the full name stays for the description

@@ -3,6 +3,8 @@
 #
 #   HA_SSH=my-ha-host ./scripts/deploy.sh            copy, then restart Home Assistant
 #   HA_SSH=my-ha-host ./scripts/deploy.sh --js-only  copy only; a page reload picks up panel JavaScript changes
+#   HA_SSH=my-ha-host ./scripts/deploy.sh --feed-url http://host:3000/api/catalog-lite
+#                                                    point the deployed copy at a local build of the app
 #
 # Python changes need the restart. Run `hass --script check_config` first if you can.
 # custom_components is often root-owned on the host, so this copies with `docker cp`, not `cp`.
@@ -15,14 +17,30 @@ HERE="$(cd "$(dirname "$0")/.." && pwd)"
 SRC="$HERE/custom_components/smart_home_index"
 TMP="/tmp/shi_deploy_$$"
 
-[ -f "$SRC/data/catalog_snapshot.json" ] || { echo "missing data/catalog_snapshot.json, build it first" >&2; exit 1; }
+JS_ONLY=0; FEED_URL=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --js-only) JS_ONLY=1 ;;
+    --feed-url) FEED_URL="$2"; shift ;;
+    *) echo "unknown option $1" >&2; exit 2 ;;
+  esac
+  shift
+done
 
-find "$SRC" -name __pycache__ -prune -exec rm -rf {} +
-scp -qr "$SRC" "$HA_SSH:$TMP"
+STAGE="$(mktemp -d)"
+trap 'rm -rf "$STAGE"' EXIT
+cp -r "$SRC" "$STAGE/smart_home_index"
+find "$STAGE" -name __pycache__ -prune -exec rm -rf {} +
+if [ -n "$FEED_URL" ]; then
+  sed -i "s|^FEED_URL = .*|FEED_URL = \"$FEED_URL\"|" "$STAGE/smart_home_index/const.py"
+  grep -q "^FEED_URL = \"$FEED_URL\"" "$STAGE/smart_home_index/const.py" || { echo "could not set FEED_URL" >&2; exit 1; }
+  echo "feed url set to $FEED_URL (deployed copy only)"
+fi
+scp -qr "$STAGE/smart_home_index" "$HA_SSH:$TMP"
 ssh "$HA_SSH" "docker exec $CONTAINER rm -rf /config/custom_components/smart_home_index \
   && docker cp $TMP $CONTAINER:/config/custom_components/smart_home_index && rm -rf $TMP"
 echo "copied"
 
-if [ "${1:-}" = "--js-only" ]; then exit 0; fi
+if [ "$JS_ONLY" = 1 ]; then exit 0; fi
 if [ -z "$COMPOSE_DIR" ]; then echo "set HA_COMPOSE_DIR to restart, or restart Home Assistant yourself"; exit 0; fi
 ssh "$HA_SSH" "docker exec $CONTAINER hass --script check_config -c /config 2>&1 | tail -3; cd $COMPOSE_DIR && docker compose restart $CONTAINER"

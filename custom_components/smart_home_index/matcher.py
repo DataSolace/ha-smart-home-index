@@ -220,8 +220,10 @@ def build_report(catalog: list[dict], aliases: dict, devices: list[dict], entiti
             groups[m["shi_id"]].append(m)
     for sid, ms in groups.items():
         reps = ms[0]["replacements"]
+        tokens = (by_id.get(sid) or {}).get("modelTokens") or []
         rep.end_of_life.append({
-            "shi_id": sid, "shi_name": ms[0]["shi_name"], "count": len(ms), "devices": [m["name"] for m in ms],
+            "shi_id": sid, "shi_name": ms[0]["shi_name"], "short_name": tokens[0] if tokens else ms[0]["shi_name"],
+            "count": len(ms), "devices": [m["name"] for m in ms],
             "rating": ms[0]["rating"],
             "replacements": [{"id": r["id"], "name": r["name"], "url": device_url(r["id"], "repairs"),
                               "rating": (by_id.get(r["id"]) or {}).get("spousalApprovalRating")} for r in reps],

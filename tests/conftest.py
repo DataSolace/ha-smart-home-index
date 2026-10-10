@@ -1,4 +1,4 @@
-"""Load matcher.py directly. Importing the package would pull in Home Assistant, and the matcher needs none of it."""
+"""Load matcher.py and feed.py by path. They import nothing from Home Assistant, so their tests run without it."""
 
 import importlib.util
 import json
@@ -10,13 +10,22 @@ import pytest
 ROOT = Path(__file__).resolve().parent.parent / "custom_components" / "smart_home_index"
 
 
-@pytest.fixture(scope="session")
-def matcher():
-    spec = importlib.util.spec_from_file_location("shi_matcher", ROOT / "matcher.py")
+def _load(name: str):
+    spec = importlib.util.spec_from_file_location(f"shi_{name}", ROOT / f"{name}.py")
     mod = importlib.util.module_from_spec(spec)
-    sys.modules["shi_matcher"] = mod  # dataclasses looks the module up by name
+    sys.modules[f"shi_{name}"] = mod  # dataclasses looks the module up by name
     spec.loader.exec_module(mod)
     return mod
+
+
+@pytest.fixture(scope="session")
+def matcher():
+    return _load("matcher")
+
+
+@pytest.fixture(scope="session")
+def feed():
+    return _load("feed")
 
 
 @pytest.fixture(scope="session")

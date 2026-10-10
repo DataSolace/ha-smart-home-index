@@ -2,7 +2,7 @@
 
 Checks the devices in your Home Assistant against the [Smart Home Index](https://smarthomeindex.com) catalog. It tells you which of your devices are end of life and what replaced them, and which kinds of device your home doesn't have yet.
 
-**Status: preview.** It runs, but it matches only part of a typical house and it isn't in the HACS store yet.
+**Status: 0.1.0, a first release.** It works, but it matches only part of a typical house and it isn't in the HACS store yet.
 
 ## What it does
 
@@ -17,6 +17,10 @@ It doesn't add anything to your dashboards or create persistent notifications.
 
 Matching runs inside Home Assistant. Your device list is not sent anywhere. The only network requests are to smarthomeindex.com for the catalog and for thumbnails in the sidebar page.
 
+## The catalog
+
+The integration downloads the catalog from `https://smarthomeindex.com/api/catalog-lite` when you set it up and once a day after that. The first setup needs an internet connection; after that it keeps the last good copy in Home Assistant's storage and carries on from it if the site is unreachable. The feed carries names, model numbers, categories, protocols, ratings and end-of-life data. It carries no prices or purchase links.
+
 ## Links
 
 Every link goes to Smart Home Index, never to a shop. Smart Home Index earns from affiliate links on its own website. This integration carries none.
@@ -29,7 +33,7 @@ Not in the HACS store yet. Once the repository is public:
 2. Add `https://github.com/DataSolace/ha-smart-home-index` as an **Integration**.
 3. Install, restart Home Assistant, then add **Smart Home Index** under Settings > Devices & services.
 
-Needs Home Assistant 2026.10 or newer.
+Needs Home Assistant 2026.10 or newer. The one option is whether to show the sidebar page; you can change it later from the integration's **Configure** button.
 
 ## Matching, and why some devices don't match
 
@@ -42,7 +46,9 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/python -m pytest
 ```
 
-`custom_components/smart_home_index/matcher.py` holds the matching and ranking logic and imports nothing from Home Assistant, so the tests run without it.
+`matcher.py` (matching and ranking) and `feed.py` (downloading the catalog with ETag revalidation and an offline fallback) import nothing from Home Assistant, so their tests run with plain pytest. The config flow test uses `pytest-homeassistant-custom-component`, which needs Python 3.14, and is skipped when that package is absent.
+
+`scripts/deploy.sh` copies the integration into a Home Assistant docker container over SSH. Its `--feed-url` option points the deployed copy at a local build of the Smart Home Index app.
 
 ## Licence
 

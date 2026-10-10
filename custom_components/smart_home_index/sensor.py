@@ -14,7 +14,9 @@ SIGNAL = f"{DOMAIN}_updated"
 
 COUNTS = {
     "matched": ("Matched devices", "mdi:link-variant",
-                lambda r: len(r["matched"]), lambda r: {"considered": r["considered"]}),
+                lambda r: len(r["matched"]),
+                lambda r: {"considered": r["considered"], "catalog_size": r["catalog_size"],
+                           "catalog_fetched_at": r["catalog"]["fetched_at"], "catalog_checked_at": r["catalog"]["checked_at"]}),
     "unmatched": ("Unmatched devices", "mdi:help-circle-outline",
                   lambda r: len(r["unmatched"]), lambda r: {"devices": [f"{u['manufacturer']} {u['model_id'] or u['model']}" for u in r["unmatched"]]}),
     "ignored": ("Ignored devices", "mdi:eye-off-outline", lambda r: len(r["ignored"]), lambda r: {}),
@@ -24,9 +26,8 @@ COUNTS = {
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, add: AddEntitiesCallback) -> None:
-    n = len(entry.runtime_data["catalog"])
     hub = DeviceInfo(identifiers={(DOMAIN, "catalog")}, name="Smart Home Index", manufacturer="DataSolace",
-                     model=f"Catalog snapshot, {n} devices", entry_type=DeviceEntryType.SERVICE,
+                     model="Device catalog", entry_type=DeviceEntryType.SERVICE,
                      configuration_url="https://smarthomeindex.com/?utm_source=home-assistant&utm_medium=integration&utm_campaign=service-device")
     add([Count(entry, hub, key) for key in COUNTS])
 
@@ -44,11 +45,11 @@ class Count(SensorEntity):
 
     @property
     def native_value(self):
-        return COUNTS[self._key][2](self._entry.runtime_data["report"])
+        return COUNTS[self._key][2](self._entry.runtime_data.report)
 
     @property
     def extra_state_attributes(self):
-        return COUNTS[self._key][3](self._entry.runtime_data["report"])
+        return COUNTS[self._key][3](self._entry.runtime_data.report)
 
     async def async_added_to_hass(self) -> None:
         self.async_on_remove(async_dispatcher_connect(self.hass, SIGNAL, self._refresh))

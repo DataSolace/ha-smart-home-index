@@ -1,9 +1,10 @@
-"""Smart Home Index preview: matches this house's devices against the SHI catalog."""
+"""Smart Home Index: matches this house's devices against the SHI catalog."""
 
 from __future__ import annotations
 
 import json
 import logging
+from dataclasses import dataclass, field
 from pathlib import Path
 
 import voluptuous as vol
@@ -18,6 +19,7 @@ from homeassistant.helpers.dispatcher import async_dispatcher_send
 from homeassistant.helpers.storage import Store
 
 from .const import CONF_PANEL, DOMAIN, PANEL_URL, STATIC_URL
+from .coordinator import CatalogCoordinator
 from .matcher import build_report, link_key, search
 
 _LOGGER = logging.getLogger(__name__)
@@ -28,6 +30,19 @@ SIGNAL = f"{DOMAIN}_updated"
 
 def _load(name: str):
     return json.loads((HERE / "data" / name).read_text())
+
+
+@dataclass
+class RuntimeData:
+    coordinator: CatalogCoordinator
+    aliases: dict
+    store: Store  # the user's links and ignores
+    user: dict
+    report: dict = field(default_factory=dict)
+
+    @property
+    def catalog(self) -> list[dict]:
+        return self.coordinator.data.devices
 
 
 def _signals(hass: HomeAssistant, entreg, device_id: str) -> list[tuple[str, str | None]]:
@@ -59,27 +74,33 @@ def _inventory(hass: HomeAssistant):
 
 
 def _recompute(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    data = entry.runtime_data
+    data: RuntimeData = entry.runtime_data
     devices, entities, domains = _inventory(hass)
-    user = data["user"]
-    report = build_report(data["catalog"], data["aliases"], devices, entities, domains,
+    user = data.user
+    report = build_report(data.catalog, data.aliases, devices, entities, domains,
                           links=user["links"], ignored=set(user["ignored"])).as_dict()
-    report["region"] = entry.options.get("region", "en")
-    report["catalog_size"] = len(data["catalog"])
-    data["report"] = report
+    cat = data.coordinator.data
+    report["catalog_size"] = len(data.catalog)
+    report["catalog"] = {"fetched_at": cat.fetched_at, "checked_at": cat.checked_at, "source": cat.source}
+    data.report = report
     _sync_issues(hass, report)
     async_dispatcher_send(hass, SIGNAL)
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    catalog = (await hass.async_add_executor_job(_load, "catalog_snapshot.json"))["devices"]
+    coordinator = CatalogCoordinator(hass, entry)
+    await coordinator.async_load_cache()
+    # Raises ConfigEntryNotReady when there is no cached catalog and the feed is unreachable.
+    await coordinator.async_config_entry_first_refresh()
+
     aliases = await hass.async_add_executor_job(_load, "ha_model_ids.json")
     store = Store(hass, 1, f"{DOMAIN}.user_matches")
     user = await store.async_load() or {}
     user.setdefault("links", {})
     user.setdefault("ignored", [])
-    entry.runtime_data = {"catalog": catalog, "aliases": aliases, "store": store, "user": user, "report": {}}
+    entry.runtime_data = RuntimeData(coordinator=coordinator, aliases=aliases, store=store, user=user)
     _recompute(hass, entry)
+    entry.async_on_unload(coordinator.async_add_listener(lambda: _recompute(hass, entry)))
 
     _remove_stray_devices(hass, entry)
     await _register_frontend(hass, entry)
@@ -116,6 +137,8 @@ def _sync_issues(hass: HomeAssistant, report: dict) -> None:
             hass, DOMAIN, issue_id, is_fixable=False, is_persistent=False, severity=ir.IssueSeverity.WARNING,
             translation_key="eol_with_replacement" if rep else "eol_no_replacement",
             translation_placeholders={
+                # Titles truncate on the Settings card, so the title gets "8 x SNZB-02" and the description the full name.
+                "short": g["short_name"], "count_prefix": f"{g['count']} x " if g["count"] > 1 else "",
                 "model": g["shi_name"], "count": str(g["count"]), "devices": ", ".join(g["devices"]),
                 "replacement": rep["name"] if rep else "", "compare_url": g["compare_url"] or g["url"],
                 "replacement_url": rep["url"] if rep else "", "url": g["url"],
@@ -152,7 +175,7 @@ def _entry(hass: HomeAssistant, connection, msg):
 def ws_report(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
-    connection.send_result(msg["id"], entry.runtime_data["report"])
+    connection.send_result(msg["id"], entry.runtime_data.report)
 
 
 @websocket_api.websocket_command({vol.Required("type"): "smart_home_index/search", vol.Required("query"): str,
@@ -163,17 +186,18 @@ def ws_report(hass: HomeAssistant, connection, msg) -> None:
 def ws_search(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
-    connection.send_result(msg["id"], search(entry.runtime_data["catalog"], msg["query"], msg.get("manufacturer"), categories=msg.get("categories"), hints=msg.get("hints")))
+    connection.send_result(msg["id"], search(entry.runtime_data.catalog, msg["query"], msg.get("manufacturer"),
+                                             categories=msg.get("categories"), hints=msg.get("hints")))
 
 
 async def _save(hass: HomeAssistant, entry: ConfigEntry) -> None:
-    data = entry.runtime_data
-    await data["store"].async_save(data["user"])
+    data: RuntimeData = entry.runtime_data
+    await data.store.async_save(data.user)
     _recompute(hass, entry)
 
 
 def _find(entry: ConfigEntry, device_id: str) -> dict | None:
-    r = entry.runtime_data["report"]
+    r = entry.runtime_data.report
     return next((u for u in r["unmatched"] + r["ignored"] if u["device_id"] == device_id), None)
 
 
@@ -185,12 +209,12 @@ async def ws_link(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
     dev = _find(entry, msg["device_id"])
-    if dev is None or not any(d["id"] == msg["shi_id"] for d in entry.runtime_data["catalog"]):
+    if dev is None or not any(d["id"] == msg["shi_id"] for d in entry.runtime_data.catalog):
         connection.send_error(msg["id"], "not_found", "Unknown device or catalog entry")
         return
-    entry.runtime_data["user"]["links"][link_key(dev["manufacturer"], dev["model_id"], dev["model"])] = msg["shi_id"]
+    entry.runtime_data.user["links"][link_key(dev["manufacturer"], dev["model_id"], dev["model"])] = msg["shi_id"]
     await _save(hass, entry)
-    connection.send_result(msg["id"], entry.runtime_data["report"])
+    connection.send_result(msg["id"], entry.runtime_data.report)
 
 
 @websocket_api.websocket_command({vol.Required("type"): "smart_home_index/unlink", vol.Required("link_key"): str})
@@ -199,9 +223,9 @@ async def ws_link(hass: HomeAssistant, connection, msg) -> None:
 async def ws_unlink(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
-    entry.runtime_data["user"]["links"].pop(msg["link_key"], None)
+    entry.runtime_data.user["links"].pop(msg["link_key"], None)
     await _save(hass, entry)
-    connection.send_result(msg["id"], entry.runtime_data["report"])
+    connection.send_result(msg["id"], entry.runtime_data.report)
 
 
 @websocket_api.websocket_command({vol.Required("type"): "smart_home_index/ignore", vol.Required("device_id"): str})
@@ -210,11 +234,11 @@ async def ws_unlink(hass: HomeAssistant, connection, msg) -> None:
 async def ws_ignore(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
-    ignored = entry.runtime_data["user"]["ignored"]
+    ignored = entry.runtime_data.user["ignored"]
     if msg["device_id"] not in ignored:
         ignored.append(msg["device_id"])
     await _save(hass, entry)
-    connection.send_result(msg["id"], entry.runtime_data["report"])
+    connection.send_result(msg["id"], entry.runtime_data.report)
 
 
 @websocket_api.websocket_command({vol.Required("type"): "smart_home_index/unignore", vol.Required("device_id"): str})
@@ -223,11 +247,11 @@ async def ws_ignore(hass: HomeAssistant, connection, msg) -> None:
 async def ws_unignore(hass: HomeAssistant, connection, msg) -> None:
     if (entry := _entry(hass, connection, msg)) is None:
         return
-    ignored = entry.runtime_data["user"]["ignored"]
+    ignored = entry.runtime_data.user["ignored"]
     if msg["device_id"] in ignored:
         ignored.remove(msg["device_id"])
     await _save(hass, entry)
-    connection.send_result(msg["id"], entry.runtime_data["report"])
+    connection.send_result(msg["id"], entry.runtime_data.report)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -240,3 +264,4 @@ async def async_remove_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
         if domain == DOMAIN:
             ir.async_delete_issue(hass, DOMAIN, issue_id)
     await Store(hass, 1, f"{DOMAIN}.user_matches").async_remove()
+    await Store(hass, 1, f"{DOMAIN}.catalog").async_remove()

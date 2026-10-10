@@ -1,1 +1,5 @@
+# pytest alone runs the pure tests (matcher, feed). The Home Assistant test harness adds the config flow test;
+# it needs Python 3.14 and a few minutes to install. The frontend package is pinned to what HA 2026.10 expects.
 pytest
+pytest-homeassistant-custom-component==0.13.371
+home-assistant-frontend==20260930.2
