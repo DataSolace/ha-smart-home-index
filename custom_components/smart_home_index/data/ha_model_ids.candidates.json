@@ -1,0 +1,664 @@
+{
+  "_comment": "CANDIDATE alias rows, not loaded by the integration. Each needs a human check before it moves to ha_model_ids.json (design decision 5: matching is curated, never guessed). Built 2026-10-10 from the libraries installed in a Home Assistant 2026.10 container and the live catalog-lite feed (842 devices).",
+  "built": "2026-10-10",
+  "how_to_read": {
+    "model_id": "What Home Assistant reports as model_id or model for the device.",
+    "confidence": "high: the library name and the SHI name are the same product and nothing else is close. medium: same product, but SHI lists one variant of several or the name differs. low: a guess that needs the device in hand.",
+    "shi_id": "The catalog record, matched by exact name on 2026-10-10."
+  },
+  "candidates": [
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoHand",
+      "shi_id": "191a19fd-442d-4cf2-b2c2-0e04340a6c7a",
+      "shi_name": "SwitchBot Bot (CR2 battery)",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoHand 'Bot'. Both Bot versions report WoHand. SHI lists the CR2 one and the rechargeable one; HA cannot tell them apart."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoCurtain",
+      "shi_id": "037950c4-dd1b-4fc0-a087-5926263f1ff1",
+      "shi_name": "SwitchBot Curtain 3 (Track Version)",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoCurtain 'Curtain / Curtain 3'. Curtain 1, 2 and 3 all report WoCurtain. SHI lists Curtain 3 rod and track versions only."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoSensorTH",
+      "shi_id": "2001452b-e47f-465d-8c1b-db715a412fec",
+      "shi_name": "SwitchBot Meter",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoSensorTH 'Meter / Meter Plus'. Meter and Meter Plus share WoSensorTH; the library tells them apart by an advert byte HA does not store."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoIOSensorTH",
+      "shi_id": "0dd0d7de-40b1-42fc-b9ca-e9006989ddcf",
+      "shi_name": "SwitchBot Indoor/Outdoor Thermo-Hygrometer",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoIOSensorTH 'Indoor/Outdoor Meter'. Library friendly name matches, but Tom's two Indoor/Outdoor Meters reported WoTHP, not this. See the review list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoTHPc",
+      "shi_id": "69831db4-86a8-4778-be7f-f5e1bf7014b2",
+      "shi_name": "SwitchBot Meter Pro CO2",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoTHPc 'Meter Pro CO2'. Library friendly name equals the SHI name."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoPresence",
+      "shi_id": "1212ea43-6afc-4b01-aa54-945f834ced86",
+      "shi_name": "SwitchBot Motion Sensor",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoPresence 'Motion Sensor'. Library friendly name equals the SHI name."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoLock",
+      "shi_id": "540088e4-4507-4d49-9bbd-ee5f96c77cfe",
+      "shi_name": "SwitchBot Lock",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoLock 'Lock'. Library friendly name equals the SHI name."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoLockPro",
+      "shi_id": "117ba34a-c4aa-4ffa-aaab-f21a37c74a21",
+      "shi_name": "SwitchBot Lock Pro",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoLockPro 'Lock Pro'. SHI also lists 'Lock Pro Matter Enabled'; both may report WoLockPro over Bluetooth."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoBlindTilt",
+      "shi_id": "63cc5d91-720a-4af8-be73-2fd57ec219b0",
+      "shi_name": "SwitchBot Blind Tilt",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoBlindTilt 'Blind Tilt'. Library friendly name equals the SHI name."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoHub2",
+      "shi_id": "3401675d-d951-4db9-86b7-9ae55715abc2",
+      "shi_name": "SwitchBot Hub 2",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoHub2 'Hub 2'. Library friendly name equals the SHI name."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Leak Detector",
+      "shi_id": "06245c0f-f432-4112-b86f-4cbe7d7ec11c",
+      "shi_name": "SwitchBot Water Leak Detector",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Leak Detector 'Leak Detector'. One leak detector in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoKeypad",
+      "shi_id": "5717619e-300b-479a-9213-ebf0d8aa51a1",
+      "shi_name": "SwitchBot Keypad Touch",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoKeypad 'Keypad / Keypad Touch'. Keypad and Keypad Touch share WoKeypad. SHI lists Keypad Touch only."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Relay Switch 1PM",
+      "shi_id": "58d9c22c-e5fd-41bb-8fbd-94aba04854be",
+      "shi_name": "SwitchBot Relay Switch 1PM",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Relay Switch 1PM 'Relay Switch 1PM'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Relay Switch 1",
+      "shi_id": "d94984e3-7bad-4f9a-823d-6a30fcda609f",
+      "shi_name": "SwitchBot Relay Switch 1",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Relay Switch 1 'Relay Switch 1'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Relay Switch 2PM",
+      "shi_id": "094bd52c-28f4-4b6b-958e-e44442beea56",
+      "shi_name": "SwitchBot Relay Switch 2PM",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Relay Switch 2PM 'Relay Switch 2PM'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoRemote",
+      "shi_id": "5046ca97-180f-4b22-b485-3d85db3511f4",
+      "shi_name": "SwitchBot Remote (W0301700)",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoRemote 'Remote'. One remote in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "WoUniversalRemote",
+      "shi_id": "920a969b-c157-41a4-af61-a4735fd3835f",
+      "shi_name": "SwitchBot Universal Remote",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls WoUniversalRemote 'Universal Remote'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Roller Shade",
+      "shi_id": "2cc69b38-e2e2-4077-8b6d-c25cbf45b3bd",
+      "shi_name": "SwitchBot Roller Shade",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Roller Shade 'Roller Shade'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "HubMini Matter",
+      "shi_id": "043a3dd9-4364-471a-8c57-1edd3607295c",
+      "shi_name": "SwitchBot Hub Mini",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls HubMini Matter 'HubMini Matter'. SHI's Hub Mini record lists Matter-over-Wi-Fi, so it is the Matter version, but the original Hub Mini has no Bluetooth advert and never reaches HA this way."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "K20 Vacuum",
+      "shi_id": "da029702-df92-44dd-9a69-6d1fe52cd3a4",
+      "shi_name": "SwitchBot K20+ Pro",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls K20 Vacuum 'K20 Vacuum'. SHI lists the K20+ Pro; the library name drops the suffix."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "S10 Vacuum",
+      "shi_id": "939a291c-1661-47c4-a5ce-4138993a52f4",
+      "shi_name": "SwitchBot S10",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls S10 Vacuum 'S10 Vacuum'. One S10 in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "K10+ Pro Combo Vacuum",
+      "shi_id": "5e4817a9-28c3-484a-86da-56e8001868b6",
+      "shi_name": "SwitchBot K10+ Pro Combo",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls K10+ Pro Combo Vacuum 'K10+ Pro Combo Vacuum'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Hub3",
+      "shi_id": "ade5ad00-b564-4b90-bb3a-e96959113f68",
+      "shi_name": "SwitchBot Hub 3",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Hub3 'Hub 3'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Lock Ultra",
+      "shi_id": "e325e5af-c1ab-44c4-b38e-33812b76254e",
+      "shi_name": "SwitchBot Lock Ultra",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Lock Ultra 'Lock Ultra'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Garage Door Opener",
+      "shi_id": "0b165fe5-ff3c-4fe4-9925-76a773075912",
+      "shi_name": "SwitchBot Garage Door Opener",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Garage Door Opener 'Garage Door Opener'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Strip Light 3",
+      "shi_id": "d181da53-f2f9-4cac-b4a6-3c84b54df42a",
+      "shi_name": "SwitchBot LED Strip Light 3 (5 m, 1200 lm)",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Strip Light 3 'Strip Light 3'. SHI lists one length; other lengths report the same model."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Floor Lamp",
+      "shi_id": "db0e027a-10a9-45dd-a0e7-c9b5a4c4912f",
+      "shi_name": "SwitchBot Floor Lamp (1200 lm)",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Floor Lamp 'Floor Lamp'. SHI also lists the RGBICWW Floor Lamp under its own model code, so this one should be the plain Floor Lamp."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "RGBICWW Strip Light",
+      "shi_id": "b3658acf-a33e-4407-be8e-c8ddb475338a",
+      "shi_name": "SwitchBot RGBICWW Strip Light (5 Meter)",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls RGBICWW Strip Light 'RGBICWW Strip Light'. SHI lists one length; other lengths report the same model."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "RGBICWW Floor Lamp",
+      "shi_id": "d772faa9-8278-4c99-8189-1d312169bae3",
+      "shi_name": "SwitchBot RGBICWW Floor Lamp",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls RGBICWW Floor Lamp 'RGBICWW Floor Lamp'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "RGBIC Neon Rope Light",
+      "shi_id": "99f72def-0fe6-4a5f-ac3a-09b7da6a04df",
+      "shi_name": "SwitchBot RGBIC Neon Rope Light (5 m)",
+      "confidence": "medium",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls RGBIC Neon Rope Light 'RGBIC Neon Rope Light'. SHI lists one length; other lengths report the same model."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "K11+ Vacuum",
+      "shi_id": "12a7a3ad-1efa-4cbe-b633-a9856fe3554b",
+      "shi_name": "SwitchBot K11+",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls K11+ Vacuum 'K11+ Vacuum'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Climate Panel",
+      "shi_id": "8559a5fd-ecc2-4f25-8e35-04ee583ec007",
+      "shi_name": "SwitchBot Home Climate Panel",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Climate Panel 'Climate Panel'. One climate panel in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Smart Thermostat Radiator",
+      "shi_id": "824cbe6a-f391-4fd0-b914-8f751f3df28f",
+      "shi_name": "SwitchBot Smart Radiator Thermostat",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Smart Thermostat Radiator 'Smart Thermostat Radiator'. Same words, different order; one radiator thermostat in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "S20 Vacuum",
+      "shi_id": "b3a818d8-c0b0-494f-b365-80d94033bc97",
+      "shi_name": "SwitchBot S20",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls S20 Vacuum 'S20 Vacuum'. One S20 in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Presence Sensor",
+      "shi_id": "c46da787-82bd-4ed9-b012-a333cbedf557",
+      "shi_name": "SwitchBot mmWave Presence Sensor",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Presence Sensor 'Presence Sensor'. One presence sensor in each list."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Keypad Vision",
+      "shi_id": "bfbbad78-a8b7-4769-8293-29849b41da46",
+      "shi_name": "SwitchBot Keypad Vision",
+      "confidence": "high",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Keypad Vision 'Keypad Vision'. Names equal."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Lock Pro Wifi",
+      "shi_id": "e8703a80-bd49-498b-b3d0-2a404d1e2321",
+      "shi_name": "SwitchBot Lock Pro Matter Enabled",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Lock Pro Wifi 'Lock Pro Wifi'. Guess: the Wi-Fi Lock Pro and the Matter-enabled Lock Pro may be the same product. Unverified."
+    },
+    {
+      "integration": "switchbot",
+      "manufacturer": "switchbot",
+      "model_id": "Weather Station",
+      "shi_id": "bdc38018-a4fd-475a-9a86-1db1c8165335",
+      "shi_name": "SwitchBot Meter Pro Weather",
+      "confidence": "low",
+      "evidence": "pySwitchbot 2.9.0 (the HA container's copy): SwitchbotModel value is what HA's switchbot integration writes as the device model. Library calls Weather Station 'Weather Station'. Guess from the word 'weather'. Unverified."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SW-001X16EU",
+      "shi_id": "92b865f2-a8d7-4567-8f8d-58f78dc9d4b1",
+      "shi_name": "Shelly 1 Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SW-001X16EU 'Shelly 1 Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3SW-001X8EU",
+      "shi_id": "42cc8f95-d6bf-4c5e-b57f-58f579011430",
+      "shi_name": "Shelly 1 Mini Gen3",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3SW-001X8EU 'Shelly 1 Mini Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SW-001X8EU",
+      "shi_id": "7e7203d8-b829-4f9e-b6cf-55b15d218fbf",
+      "shi_name": "Shelly 1 Mini Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SW-001X8EU 'Shelly 1 Mini Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SW-001P16EU",
+      "shi_id": "53c2691c-13a6-4283-8c88-2beb3cb67e3b",
+      "shi_name": "Shelly 1PM Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SW-001P16EU 'Shelly 1PM Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3SW-001P8EU",
+      "shi_id": "9cc63e95-6855-4764-a0ba-6ec20d117949",
+      "shi_name": "Shelly 1PM Mini Gen3",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3SW-001P8EU 'Shelly 1PM Mini Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SW-001P8EU",
+      "shi_id": "8d1e2153-7cb5-42af-acb8-b1489606d5cb",
+      "shi_name": "Shelly 1PM Mini Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SW-001P8EU 'Shelly 1PM Mini Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SW-002P16EU",
+      "shi_id": "d3d355cb-fa6a-41d3-b653-18ae96c6b092",
+      "shi_name": "Shelly 2PM Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SW-002P16EU 'Shelly 2PM Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4DM-0A101WWL",
+      "shi_id": "e332267d-3c60-42d0-97eb-be90a577b225",
+      "shi_name": "Shelly Dimmer Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4DM-0A101WWL 'Shelly Dimmer Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4DM-0A102US",
+      "shi_id": "e332267d-3c60-42d0-97eb-be90a577b225",
+      "shi_name": "Shelly Dimmer Gen4",
+      "confidence": "medium",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4DM-0A102US 'Shelly Dimmer Gen4 US'. See the review list."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3BL-D010009AEU",
+      "shi_id": "557a66bd-d111-4273-ac65-dea4598bf6de",
+      "shi_name": "Shelly Duo Bulb E27 Gen3 (E27, 800 lm, tunable white)",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3BL-D010009AEU 'Shelly Duo Bulb Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SHEM",
+      "shi_id": "fbe8d7e4-4dbc-428d-ae9a-96268402b7df",
+      "shi_name": "Shelly EM (+50A Clamp) ",
+      "confidence": "medium",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SHEM 'Shelly EM'. See the review list."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4EM-002CXCEU",
+      "shi_id": "90e47229-f783-4390-864f-6142d5774842",
+      "shi_name": "Shelly EM Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4EM-002CXCEU 'Shelly EM Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4EM-001PXCEU16",
+      "shi_id": "c585edc2-4be8-497c-adc7-135e1b60dfd6",
+      "shi_name": "Shelly EM Mini Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4EM-001PXCEU16 'Shelly EM Mini Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SN-0071A",
+      "shi_id": "13cf6fc7-b20a-448f-9125-063d421c0616",
+      "shi_name": "Shelly Flood Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SN-0071A 'Shelly Flood Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SN-0071Z",
+      "shi_id": "aad95ed2-0b78-4292-b0c0-8b252a524ad3",
+      "shi_name": "Shelly Flood S Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SN-0071Z 'Shelly Flood S Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3SN-0U12A",
+      "shi_id": "17a5d0e6-c774-43c2-a00a-8053e7832798",
+      "shi_name": "Shelly H&T Gen3",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3SN-0U12A 'Shelly H&T Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3BL-C010007AEU",
+      "shi_id": "4d4b3b43-815b-453c-a522-1da684f83eae",
+      "shi_name": "Shelly Multicolor Bulb E27 Gen3 (E27, 806 lm, colour)",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3BL-C010007AEU 'Shelly Multicolor Bulb Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3PM-001PCEU16",
+      "shi_id": "04dd247d-14e0-4809-918a-d2d3276af42f",
+      "shi_name": "Shelly PM Mini Gen3",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3PM-001PCEU16 'Shelly PM Mini Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SNPL-00112UK",
+      "shi_id": "e98554cc-75f7-45ce-9f61-555b6d164cd0",
+      "shi_name": "Shelly Plus Plug UK",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SNPL-00112UK 'Shelly Plus Plug UK'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SNDC-0D4P10WW",
+      "shi_id": "2355f2bf-1111-493e-a39e-9bd5bec3b64d",
+      "shi_name": "Shelly Plus RGBW PM",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SNDC-0D4P10WW 'Shelly Plus RGBW PM'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S4SN-0U61X",
+      "shi_id": "d6f53e91-154d-4772-a92e-c0ddcad5699c",
+      "shi_name": "Shelly Presence Gen4",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S4SN-0U61X 'Shelly Presence Gen4'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SAWD-0A1XX10EU1",
+      "shi_id": "133125db-00ba-4eef-9a4c-54ae48cdb73f",
+      "shi_name": "Shelly Wall Display (Black/White)",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SAWD-0A1XX10EU1 'Shelly Wall Display'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SAWD-6A1XX10EU0",
+      "shi_id": "6e22d58b-76e5-418c-b255-030898467159",
+      "shi_name": "Shelly Wall Display X1i",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SAWD-6A1XX10EU0 'Shelly Wall Display X1i'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SAWD-5A1XX10EU0",
+      "shi_id": "3a02fe4a-b464-4269-954f-34a5168fd96c",
+      "shi_name": "Shelly Wall Display X2i",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SAWD-5A1XX10EU0 'Shelly Wall Display X2i'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "SAWD-3A1XE10EU2",
+      "shi_id": "8bad46bb-604d-4f24-a958-77f9041f5355",
+      "shi_name": "Shelly Wall Display XL",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls SAWD-3A1XE10EU2 'Shelly Wall Display XL'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "shelly",
+      "manufacturer": "Shelly",
+      "model_id": "S3SN-0024X",
+      "shi_id": "264a08f3-5275-4c8e-8906-05b25f050a84",
+      "shi_name": "Shelly i4 Gen3",
+      "confidence": "high",
+      "evidence": "aioshelly 13.34.1 (the HA container's copy): HA's shelly integration writes the friendly name as model and this code as model_id. aioshelly calls S3SN-0024X 'Shelly I4 Gen3'. aioshelly's name equals the SHI name."
+    },
+    {
+      "integration": "tasmota",
+      "manufacturer": "Tasmota",
+      "model_id": "NOUS A1T",
+      "shi_id": "ce4101f4-2736-4cc5-8191-8d35b2792fb0",
+      "shi_name": "Nous A1T WiFi Smart Socket (Tasmota)",
+      "confidence": "medium",
+      "evidence": "Tasmota's discovery message: HA's tasmota integration writes the template/module name (md) as the model, manufacturer 'Tasmota'. Nous ships these with Tasmota and the template name is 'NOUS A1T' on templates.blakadder.com. Not checked against a real device."
+    },
+    {
+      "integration": "tasmota",
+      "manufacturer": "Tasmota",
+      "model_id": "NOUS A5T",
+      "shi_id": "d46b4fb4-b3d9-49db-be54-8b0d2ef35c55",
+      "shi_name": "Nous A5T WiFi Smart Power Strip (Tasmota)",
+      "confidence": "medium",
+      "evidence": "Tasmota's discovery message: HA's tasmota integration writes the template/module name (md) as the model, manufacturer 'Tasmota'. Same source as A1T. Not checked against a real device."
+    },
+    {
+      "integration": "tasmota",
+      "manufacturer": "Tasmota",
+      "model_id": "Sonoff Basic",
+      "shi_id": "98695036-a21a-4455-8f92-b84b034680ee",
+      "shi_name": "SONOFF BASIC Wi-Fi Smart Switch (BASICR4)",
+      "confidence": "low",
+      "evidence": "Tasmota's discovery message: HA's tasmota integration writes the template/module name (md) as the model, manufacturer 'Tasmota'. Tasmota's built-in 'Sonoff Basic' module covers R1, R2 and R3 boards. SHI lists only the R4, which ships with a different chip. Probably wrong for most installs."
+    }
+  ],
+  "no_shi_record_yet": {
+    "switchbot": [
+      "WoHumi",
+      "WoPlug",
+      "WoContact",
+      "WoStrip",
+      "WoBulb",
+      "WoCeiling",
+      "Evaporative Humidifier",
+      "Circulator Fan",
+      "Circulator Fan Pro",
+      "Standing Fan",
+      "K10+ Vacuum",
+      "K10+ Pro Vacuum",
+      "Air Purifier US",
+      "Air Purifier JP",
+      "Air Purifier Table US",
+      "Air Purifier Table JP",
+      "Lock Lite",
+      "Candle Warmer Lamp",
+      "Plug Mini (EU)",
+      "RGBICWW Light Bars",
+      "RGBICWW Ceiling Light",
+      "Permanent Outdoor Light",
+      "RGBIC Neon Wire Rope Light",
+      "Art Frame",
+      "Keypad Vision Pro",
+      "Lock Vision Pro",
+      "Lock Vision",
+      "Lock Ultra Max"
+    ],
+    "_comment": "pySwitchbot model codes with no SHI record. Each is a catalog gap, not an alias."
+  },
+  "already_matched_by_model_number": {
+    "shelly": [
+      "S3SW-001X16EU",
+      "S3SW-0A1X1EUL",
+      "S3SW-001P16EU",
+      "S3SW-0A2X4EUL",
+      "S3SW-002P16EU",
+      "S4DM-0010WW",
+      "SAWD-2A1XX10EU1"
+    ],
+    "_comment": "SHI names carry these codes in brackets, so the model-number rule matches them without an alias."
+  },
+  "not_covered": [
+    "Shelly BLU devices arrive through the bthome or shelly integrations with their own model strings; not checked.",
+    "Tasmota's md field is whatever template the user flashed, so most Tasmota devices will never alias cleanly.",
+    "Zigbee2MQTT, ZHA, TP-Link, Tuya: not started."
+  ]
+}
