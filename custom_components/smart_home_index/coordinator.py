@@ -55,7 +55,7 @@ class CatalogCoordinator(DataUpdateCoordinator[feed.Catalog]):
             await self.store.async_save(catalog.as_stored())
             _LOGGER.debug("Catalog downloaded: %d devices", len(catalog.devices))
         elif catalog.source == "cache":
-            _LOGGER.warning("Could not reach %s; using the catalog downloaded %s", self.url, catalog.fetched_at)
+            _LOGGER.warning("Using the catalog downloaded %s: %s", catalog.fetched_at, catalog.note)
         return catalog
 
     async def async_remove_cache(self) -> None:

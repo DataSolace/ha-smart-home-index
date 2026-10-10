@@ -60,15 +60,19 @@ def test_offline_keeps_working_from_the_cached_copy(feed):
     first = run(feed.refresh(http, URL, None, "t1"))
     offline = run(feed.refresh(http, URL, first, "t2"))
     assert offline.source == "cache" and offline.devices == first.devices and offline.checked_at == "t1"
+    assert "no route" in offline.note
 
 
 def test_a_server_error_or_junk_body_also_falls_back_to_the_cache(feed):
     http = FakeHttp((200, {"ETag": '"abc"'}, GOOD), (503, {}, b"down"), (200, {}, b"<html>cloudflare</html>"),
                     (200, {}, {"devices": []}))
     cat = run(feed.refresh(http, URL, None, "t1"))
+    notes = []
     for _ in range(3):
         cat = run(feed.refresh(http, URL, cat, "t2"))
         assert cat.source == "cache" and cat.devices == GOOD["devices"]
+        notes.append(cat.note)
+    assert "503" in notes[0] and "not JSON" in notes[1] and "no devices" in notes[2]
 
 
 def test_the_first_run_needs_the_network(feed):

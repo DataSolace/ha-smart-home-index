@@ -81,16 +81,14 @@ class ShiPanel extends HTMLElement {
           )
           .join("")
       : `<p class="sub" style="padding:12px 0">${p.query ? "Nothing in SHI matches that." : `SHI doesn't list anything from ${esc(p.u.manufacturer)} that looks like this. Search by product name, or suggest it.`}</p>`;
-    box
-      .querySelectorAll("[data-link]")
-      .forEach((b) =>
-        b.addEventListener("click", () =>
-          this._act("link", {
-            device_id: p.u.device_id,
-            shi_id: b.dataset.link,
-          }),
-        ),
-      );
+    box.querySelectorAll("[data-link]").forEach((b) =>
+      b.addEventListener("click", () =>
+        this._act("link", {
+          device_id: p.u.device_id,
+          shi_id: b.dataset.link,
+        }),
+      ),
+    );
   }
 
   _picker() {

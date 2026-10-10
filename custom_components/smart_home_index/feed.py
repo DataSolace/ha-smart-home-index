@@ -28,6 +28,7 @@ class Catalog:
     fetched_at: str | None = None  # when the body was last downloaded
     checked_at: str | None = None  # when the feed last answered, 200 or 304
     source: str = "cache"  # network, not_modified, cache
+    note: str | None = None  # why the cached copy is in use, when source is "cache"
 
     def as_stored(self) -> dict[str, Any]:
         return {"etag": self.etag, "fetched_at": self.fetched_at, "checked_at": self.checked_at,
@@ -68,7 +69,7 @@ async def refresh(fetch: Fetch, url: str, cached: Catalog | None, now: str) -> C
 
     def fallback(reason: str) -> Catalog:
         if cached and cached.devices:
-            return replace(cached, source="cache")
+            return replace(cached, source="cache", note=reason)
         raise FeedError(reason)
 
     try:
