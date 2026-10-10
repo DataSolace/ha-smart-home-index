@@ -1,0 +1,44 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Smart Home Index",
+        "description": "Smart Home Index compares your devices with its catalog of {count} smart home devices. Matching runs on this machine; your device list never leaves Home Assistant. Links open smarthomeindex.com.",
+        "data": {
+          "region": "Region",
+          "show_panel": "Add a Smart Home Index page to the sidebar",
+          "telemetry": "Share anonymous counts of matched models to help SHI decide what to cover"
+        },
+        "data_description": {
+          "region": "Used for the SHI pages you are sent to.",
+          "telemetry": "Off by default. Sends model counts only, never names, areas or anything identifying."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Smart Home Index is already set up."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Smart Home Index options",
+        "data": {
+          "region": "Region",
+          "show_panel": "Add a Smart Home Index page to the sidebar",
+          "telemetry": "Share anonymous counts of matched models"
+        }
+      }
+    }
+  },
+  "issues": {
+    "eol_with_replacement": {
+      "title": "{model} is end of life ({count} in use)",
+      "description": "Smart Home Index lists **{model}** as discontinued. You run {count}: {devices}.\n\nThey keep working, but expect no new firmware. The manufacturer's successor is **{replacement}**.\n\n[Compare the two on Smart Home Index]({compare_url}) \u00b7 [View {replacement}]({replacement_url})"
+    },
+    "eol_no_replacement": {
+      "title": "{model} is end of life ({count} in use)",
+      "description": "Smart Home Index lists **{model}** as discontinued, with no direct successor. You run {count}: {devices}.\n\n[See it on Smart Home Index]({url})"
+    }
+  }
+}

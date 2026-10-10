@@ -1,0 +1,10 @@
+# Private working notes for Claude sessions: LAN addresses, real device names, screenshots of a real house.
+CLAUDE.md
+_private/
+
+# Rebuilt by _private/make_snapshot.py until the integration fetches catalog-lite.
+custom_components/smart_home_index/data/catalog_snapshot.json
+
+__pycache__/
+.pytest_cache/
+.venv/

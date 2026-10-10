@@ -1,0 +1,52 @@
+{
+  "_comment": "Seed of the haModelIds[] alias table (plan D3). Each rule maps what HA reports to an SHI catalog id. Prototype only; the real table ships inside catalog-lite.",
+  "rules": [
+    {
+      "manufacturer": "Philips",
+      "model_id": "929002398602",
+      "shi_id": "2318e14e-4781-40dd-986e-505cac475413",
+      "source": "Z2M: Hue dimmer switch v2 (RWL022)"
+    },
+    {
+      "manufacturer": "Tuya",
+      "model_id": "TS0207_repeater",
+      "shi_id": "004168db-0945-4dfc-9265-f556b52180bc",
+      "source": "Z2M fingerprint"
+    },
+    {
+      "manufacturer": "Aqara",
+      "model_id": "WXKG15LM",
+      "shi_id": "@token:WRS-R02",
+      "source": "Z2M: WXKG15LM is the WRS-R02 H1 double rocker"
+    },
+    {
+      "manufacturer": "switchbot",
+      "model_id": "WoTHP",
+      "shi_id": "0dd0d7de-40b1-42fc-b9ca-e9006989ddcf",
+      "source": "Confirmed by hand, with the devices in front of us, 2026-10-10. pySwitchbot labels WoTHP 'METER_PRO', HA calls the device 'Indoor/Outdoor Meter', SHI lists several similar meters, so none of these three sources settles it."
+    }
+  ],
+  "ignore": {
+    "integrations": [
+      "mobile_app",
+      "bluetooth",
+      "ibeacon",
+      "sun",
+      "met",
+      "backup",
+      "hassio",
+      "go2rtc",
+      "google_translate",
+      "shopping_list",
+      "local_todo",
+      "radio_browser",
+      "co2signal",
+      "analytics",
+      "hacs",
+      "upnp",
+      "group",
+      "dlna_dmr"
+    ],
+    "models": ["Google Cast Group", "Bridge"]
+  }
+}

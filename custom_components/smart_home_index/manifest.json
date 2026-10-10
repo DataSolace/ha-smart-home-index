@@ -1,0 +1,14 @@
+{
+  "domain": "smart_home_index",
+  "name": "Smart Home Index (preview)",
+  "codeowners": ["@DataSolace"],
+  "config_flow": true,
+  "dependencies": ["http", "frontend", "panel_custom", "websocket_api"],
+  "documentation": "https://github.com/DataSolace/ha-smart-home-index",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/DataSolace/ha-smart-home-index/issues",
+  "requirements": [],
+  "single_config_entry": true,
+  "version": "0.0.1"
+}
