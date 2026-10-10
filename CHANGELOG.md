@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-10)
 
 First release candidate, for install as a HACS custom repository.
 
