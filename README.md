@@ -44,4 +44,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 
 `custom_components/smart_home_index/matcher.py` holds the matching and ranking logic and imports nothing from Home Assistant, so the tests run without it.
 
+## Licence
+
+Apache License 2.0, see [LICENSE](LICENSE). The licence covers this code. The Smart Home Index catalog data and name are not part of it.
+
 Maintained by [DataSolace](https://github.com/DataSolace).
