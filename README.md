@@ -2,7 +2,7 @@
 
 Checks the devices in your Home Assistant against the [Smart Home Index](https://smarthomeindex.com) catalog. It tells you which of your devices are end of life and what replaced them, and which kinds of device your home doesn't have yet.
 
-**Status: 0.1.0, a first release.** It works, but it matches only part of a typical house and it isn't in the HACS store yet.
+**Status: 0.1.1, an early release.** It works, but it matches only part of a typical house and it isn't in the HACS store yet.
 
 ## What it does
 
